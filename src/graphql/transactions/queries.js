@@ -13,3 +13,10 @@ export const GET_MONTH_DATA = gql`
     }
   }
 `
+export const GET_CATEGORIES = gql`
+  query getUserTransactions($where: WHEREFILTER) {
+    getUserTransactions(where: $where) {
+      category
+    }
+  }
+`

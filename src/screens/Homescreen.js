@@ -1,34 +1,89 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 
-import { Col, Container, Row } from 'react-bootstrap'
-import { Doughnut } from 'react-chartjs-2'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 import ExpenseBreakDown from '../components/Dashboard/ExpenseBreakDown'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
-import { GET_MONTH_DATA } from '../graphql/transactions/queries'
+import { GET_CATEGORIES, GET_MONTH_DATA } from '../graphql/transactions/queries'
+import {
+  getCurrentDate,
+  getCurrentMonth,
+  getCurrentYear
+} from '../utils/getDates'
+import {
+  Container as FloatingContainer,
+  Button as FloatingButton
+} from 'react-floating-action-button'
+import AddTransactionModal from '../components/AddTransactionModal'
+import { CREATE_TRANSACTION } from '../graphql/transactions/mutations'
 
 const Homescreen = () => {
+  const [addLoading, setAddLoading] = useState(false)
   const [totalIncome, setTotalIncome] = useState(0)
   const [totalExpense, setTotalExpense] = useState(0)
+  const [showAddModal, setShowAddModal] = useState(false)
+
+  const [transactionData, setTransactionData] = useState({
+    type: 'EXPENSE',
+    amount: 1500,
+    category: 'TRAVEL'
+  })
 
   const where = {
-    mm: '04'
+    mm: getCurrentMonth()
   }
 
-  const { loading, data, error } = useQuery(GET_MONTH_DATA, {
+  const { loading, data, error, refetch } = useQuery(GET_MONTH_DATA, {
     variables: {
       where: where
     }
   })
-  useEffect(() => {
-    console.log(`data.getTransactions`, data?.getUserTransactions)
+  const [createTransaction] = useMutation(CREATE_TRANSACTION)
+  const submitTransaction = () => {
+    const { type, amount, category } = transactionData
 
+    createTransaction({
+      variables: {
+        type: String(type),
+        amount: String(amount),
+        category: String(category),
+        dd: String(getCurrentDate()),
+        mm: String(getCurrentMonth()),
+        yyyy: String(getCurrentYear())
+      },
+      refetchQueries: [
+        {
+          query: GET_MONTH_DATA
+        },
+        { query: GET_CATEGORIES }
+      ],
+      awaitRefetchQueries: true
+    })
+      .then((res) => {
+        setAddLoading(false)
+        console.log(`res`, res)
+
+        if (res.message === 'created') {
+          // todo set true created message
+          refetch()
+        }
+      })
+      .catch((error) => {
+        setAddLoading(false)
+        setShowAddModal(false)
+        console.log(`error`, error)
+      })
+    setShowAddModal(false)
+  }
+
+  useEffect(() => {
     let _totalExpense = 0
     let _totalIncome = 0
     data?.getUserTransactions?.map((t) => {
       if (t.type === 'EXPENSE') _totalExpense += Number(t.amount)
       if (t.type === 'DEPOSIT') _totalIncome += Number(t.amount)
+      return t
     })
 
     setTotalExpense(_totalExpense)
@@ -39,9 +94,25 @@ const Homescreen = () => {
   return (
     <>
       <Header />
+      {showAddModal && (
+        <AddTransactionModal
+          show={showAddModal}
+          submitTransaction={submitTransaction}
+          onHide={() => setShowAddModal(false)}
+          transactionData={transactionData}
+          setTransactionData={setTransactionData}
+        />
+      )}
       {loading && <Loader />}
       <Container className="my-5">
-        <h1 className="lspace-large">DashBoard</h1>
+        <Row className="d-flex align-items-center justify-content-between">
+          <h1 className="lspace-large">DashBoard</h1>
+
+          <div className="d-flex">
+            <h3 className="mx-5">Month {getCurrentMonth()}</h3>
+            <h3> Year {getCurrentYear()}</h3>
+          </div>
+        </Row>
         <Row className="d-flex  hero-stats" style={{ fontSize: '2rem' }}>
           <Col>
             TOTAL INCOME <p className="amount">₹ {totalIncome}</p>
@@ -60,6 +131,25 @@ const Homescreen = () => {
             </p>
           </Col>
         </Row>
+
+        <FloatingContainer>
+          {/* <Link href="#"
+                tooltip="Create note link"
+                icon="far fa-sticky-note" />
+            <Link href="#"
+                tooltip="Add user link"
+                icon="fas fa-user-plus" />
+                className="fab-item btn btn-link btn-lg text-white" */}
+          <FloatingButton
+            tooltip="Add Transaction"
+            onClick={() => {
+              console.log(`clicked`)
+              setShowAddModal(true)
+            }}
+          >
+            <AddSvg />
+          </FloatingButton>
+        </FloatingContainer>
       </Container>
 
       <ExpenseBreakDown totalExpense={totalExpense} />
@@ -68,3 +158,17 @@ const Homescreen = () => {
 }
 
 export default Homescreen
+
+const AddSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+    >
+      <title>add</title>
+      <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+    </svg>
+  )
+}

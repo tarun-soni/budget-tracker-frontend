@@ -1,10 +1,9 @@
 import React from 'react'
-import { Container, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap'
+import { Container, Nav, Navbar, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
 
 import { userInfoState } from '../store/login'
-import CustomToast from './CustomToast'
 const Header = () => {
   const [userInfo] = useRecoilState(userInfoState)
 

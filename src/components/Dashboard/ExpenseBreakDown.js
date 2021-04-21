@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 
-import { Col, Container, ProgressBar, Row } from 'react-bootstrap'
-import { Doughnut } from 'react-chartjs-2'
+import { Container, ProgressBar } from 'react-bootstrap'
 import Loader from '../Loader'
 import {
   GET_MONTH_DATA,
   GET_CATEGORIES
 } from '../../graphql/transactions/queries'
 import getPercentage from '../../utils/getPercentage'
+import CustomDoughnut from './CustomDoughnut'
 
 const ExpenseBreakDown = ({ totalExpense }) => {
   const [userData, setUserData] = useState({})
-  const [amountArrayToPass, setAmountArrayToPass] = useState([])
   const [categories, setCategories] = useState([])
   const where = {
     mm: '04',
@@ -31,6 +30,7 @@ const ExpenseBreakDown = ({ totalExpense }) => {
     let _categories = []
     categoryData?.getUserTransactions.map((t) => {
       _categories.push(t?.category)
+      return _categories
     })
     setCategories(_categories)
   }, [data, categoryData])
@@ -53,47 +53,12 @@ const ExpenseBreakDown = ({ totalExpense }) => {
     setUserData(_data)
   }, [data, categories])
 
-  const chartData = {
-    labels: Object.keys(userData),
-    datasets: [
-      {
-        label: 'Expense distirbution',
-        data: Object.values(userData),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 2
-      }
-    ]
-  }
   return (
     <>
       <Container>
-        <div className="m-2">
-          <Doughnut
-            height={120}
-            data={chartData}
-            options={{
-              // rotation: Math.PI,
-              cutoutPercentage: 70,
-              legend: {
-                display: true
-              }
-            }}
-          />
+        <h4>Expense Breakdown</h4>
+        <div className="mx-2  my-4">
+          <CustomDoughnut userData={userData} />
         </div>
 
         <div>
@@ -102,7 +67,7 @@ const ExpenseBreakDown = ({ totalExpense }) => {
               <div className="d-flex justify-content-between align-items-center">
                 <h5>{c}</h5>
                 <div className="d-flex justify-content-between">
-                  <h6>{getPercentage(userData[`${c}`], totalExpense)} %</h6>
+                  <h4>{getPercentage(userData[`${c}`], totalExpense)} %</h4>
                 </div>
               </div>
               <ProgressBar now={userData[`${c}`]} max={totalExpense} />

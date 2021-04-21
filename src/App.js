@@ -1,25 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import Routes from './Routes'
+
+import { useEffect } from 'react'
+import axios from 'axios'
+import { userInfoState } from './store/login'
+import { useRecoilState } from 'recoil'
+const API_URL = `${process.env.REACT_APP_BACKEND_URL}/graphql`
+const httpLink = createHttpLink({
+  uri: API_URL
+})
+
+const authLink = setContext((_, { headers }) => {
+  const accessToken = localStorage.getItem('accessToken')
+  return {
+    headers: {
+      ...headers,
+      Authorization: accessToken ? `Bearer ${accessToken}` : ''
+    }
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+  connectToDevTools: true
+})
 
 function App() {
+  const [, setUserInfo] = useRecoilState(userInfoState)
+
+  useEffect(() => {
+    if (localStorage.getItem('loginStatus') === 'true') {
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        })
+        .then((res) => {
+          setUserInfo({
+            userId: res.data._id,
+            isAuthenticated: true,
+
+            name: res.data.name,
+            email: res.data.email
+          })
+        })
+        .catch((err) => {
+          console.log('Token Check Failed:', err)
+          window.location.replace('/logout')
+        })
+    }
+    //eslint-disable-next-line
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ApolloProvider client={client}>
+      <Routes />
+    </ApolloProvider>
+  )
 }
 
-export default App;
+export default App

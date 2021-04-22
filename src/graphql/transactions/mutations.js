@@ -21,3 +21,10 @@ export const CREATE_TRANSACTION = gql`
     }
   }
 `
+export const DELETE_TRANSACTION = gql`
+  mutation deleteTransaction($id: ID!) {
+    deleteTransaction(id: $id) {
+      message
+    }
+  }
+`

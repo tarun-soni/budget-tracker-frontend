@@ -1,20 +1,44 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Button, Container, Table } from 'react-bootstrap'
-import { GET_MONTH_DATA } from '../../graphql/transactions/queries'
+import {
+  GET_CATEGORIES,
+  GET_MONTH_DATA
+} from '../../graphql/transactions/queries'
 import Loader from '../Loader'
-
+import { DELETE_TRANSACTION } from '../../graphql/transactions/mutations'
 const AllPreviousTransactions = () => {
   const [allTransactions, setAllTransactions] = useState([])
   const { loading, data, error } = useQuery(GET_MONTH_DATA, {
     variables: { where: {} }
   })
-
+  const [deleteMutation] = useMutation(DELETE_TRANSACTION)
   useEffect(() => {
     console.log(`All Transactions`, data?.getUserTransactions)
     setAllTransactions(data?.getUserTransactions)
   }, [data])
 
+  const deleteHandler = async (id) => {
+    deleteMutation({
+      variables: {
+        id
+      },
+      refetchQueries: [
+        {
+          query: GET_MONTH_DATA,
+          variables: { where: {} }
+        }
+      ]
+    })
+      .then((res) => {
+        if (res?.data?.deleteTransaction.message === 'DELETED')
+          console.log('deleted')
+        // todo add delete toast
+      })
+      .catch((error) => {
+        console.log(`error`, error)
+      })
+  }
   return (
     <>
       {loading ? (
@@ -52,7 +76,11 @@ const AllPreviousTransactions = () => {
                     {transaction?.dd} - {transaction?.mm} - {transaction?.yyyy}
                   </td>
                   <td>
-                    <Button variant="danger" size="sm">
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => deleteHandler(transaction._id)}
+                    >
                       Delete
                     </Button>
                   </td>

@@ -4,7 +4,7 @@ export const CREATE_TRANSACTION = gql`
   mutation createTransaction(
     $type: TypeOfTransaction!
     $amount: String!
-    $category: String!
+    $category: String
     $dd: String!
     $mm: String!
     $yyyy: String!

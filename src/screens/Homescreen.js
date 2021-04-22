@@ -31,7 +31,8 @@ const Homescreen = () => {
   })
 
   const where = {
-    mm: getCurrentMonth()
+    mm: getCurrentMonth(),
+    yyyy: getCurrentYear()
   }
 
   const { loading, data, error, refetch } = useQuery(GET_MONTH_DATA, {
@@ -43,11 +44,12 @@ const Homescreen = () => {
   const submitTransaction = () => {
     const { type, amount, category } = transactionData
 
+    console.log(`type`, type)
     createTransaction({
       variables: {
         type: String(type),
         amount: String(amount),
-        category: String(category),
+        category: String(type) === 'EXPENSE' ? String(category) : '',
         dd: String(getCurrentDate()),
         mm: String(getCurrentMonth()),
         yyyy: String(getCurrentYear())
@@ -64,8 +66,12 @@ const Homescreen = () => {
         setAddLoading(false)
         console.log(`res`, res)
 
-        if (res.message === 'created') {
+        if (res?.data?.createTransaction.message === 'created') {
           // todo set true created message
+
+          console.log(`
+          refetch
+          `)
           refetch()
         }
       })
@@ -83,6 +89,7 @@ const Homescreen = () => {
     data?.getUserTransactions?.map((t) => {
       if (t.type === 'EXPENSE') _totalExpense += Number(t.amount)
       if (t.type === 'DEPOSIT') _totalIncome += Number(t.amount)
+
       return t
     })
 
@@ -133,13 +140,6 @@ const Homescreen = () => {
         </Row>
 
         <FloatingContainer>
-          {/* <Link href="#"
-                tooltip="Create note link"
-                icon="far fa-sticky-note" />
-            <Link href="#"
-                tooltip="Add user link"
-                icon="fas fa-user-plus" />
-                className="fab-item btn btn-link btn-lg text-white" */}
           <FloatingButton
             tooltip="Add Transaction"
             onClick={() => {
@@ -152,7 +152,7 @@ const Homescreen = () => {
         </FloatingContainer>
       </Container>
 
-      <ExpenseBreakDown totalExpense={totalExpense} />
+      <ExpenseBreakDown totalExpense={totalExpense} where={where} />
     </>
   )
 }

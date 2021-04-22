@@ -1,6 +1,7 @@
 import { Doughnut } from 'react-chartjs-2'
 
 const CustomDoughnut = ({ userData }) => {
+  console.log(`userData in chart`, userData)
   const chartData = {
     labels: Object.keys(userData),
     datasets: [
@@ -39,4 +40,7 @@ const CustomDoughnut = ({ userData }) => {
   )
 }
 
+CustomDoughnut.defaultProps = {
+  userData: {}
+}
 export default CustomDoughnut

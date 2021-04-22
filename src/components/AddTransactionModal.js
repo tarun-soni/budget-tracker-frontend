@@ -27,10 +27,10 @@ const AddTransactionModal = ({
                 <Form.Label className="mt-2 font-l">Amount</Form.Label>
                 <Form.Control
                   value={transactionData.amount}
-                  onchange={(e) =>
+                  onChange={(e) =>
                     setTransactionData({
                       ...transactionData,
-                      amount: e.taget.value
+                      amount: e.target.value
                     })
                   }
                 />
@@ -39,10 +39,10 @@ const AddTransactionModal = ({
                 <Form.Control
                   as="select"
                   value={transactionData.type}
-                  onchange={(e) =>
+                  onChange={(e) =>
                     setTransactionData({
                       ...transactionData,
-                      type: e.taget.value
+                      type: e.target.value
                     })
                   }
                 >
@@ -54,10 +54,10 @@ const AddTransactionModal = ({
                 <Form.Control
                   as="select"
                   value={transactionData.category}
-                  onchange={(e) =>
+                  onChange={(e) =>
                     setTransactionData({
                       ...transactionData,
-                      category: e.taget.value
+                      category: e.target.value
                     })
                   }
                 >

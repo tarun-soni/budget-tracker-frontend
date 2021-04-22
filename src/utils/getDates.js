@@ -13,5 +13,5 @@ export const getCurrentMonth = () => {
 export const getCurrentYear = () => {
   let today = new Date()
   let yyyy = today.getFullYear()
-  return yyyy
+  return String(yyyy)
 }

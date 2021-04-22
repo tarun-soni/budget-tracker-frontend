@@ -10,10 +10,12 @@ import LoggedOutRoute from './components/LoggedOutRoute'
 import LoginScreen from './screens/LoginScreen/LoginScreen'
 import Homescreen from './screens/Homescreen'
 import Logout from './components/Logout'
+import DetailedScreen from './screens/DetailedScreen'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
 const HOMESCREEN = '/homescreen'
+const DETAILEDSCREEN = '/detailedData'
 const Routes = () => {
   return (
     <Router>
@@ -31,6 +33,7 @@ const Routes = () => {
         </PrivateRoute>
 
         <PrivateRoute path={HOMESCREEN} exact component={Homescreen} />
+        <PrivateRoute path={DETAILEDSCREEN} exact component={DetailedScreen} />
       </Switch>
     </Router>
   )

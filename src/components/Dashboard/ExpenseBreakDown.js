@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 
-import { Container, ProgressBar } from 'react-bootstrap'
+import { Col, Container, ListGroup, ProgressBar, Row } from 'react-bootstrap'
 import Loader from '../Loader'
 import {
   GET_MONTH_DATA,
@@ -55,7 +55,7 @@ const ExpenseBreakDown = ({ totalExpense, where }) => {
       {catLoading || loading ? (
         <Loader />
       ) : (
-        <Container>
+        <Container className="my-5">
           <h4>Expense Breakdown</h4>
           <div className="mx-2  my-4">
             {totalExpense !== 0 ? (
@@ -64,27 +64,43 @@ const ExpenseBreakDown = ({ totalExpense, where }) => {
               <h1>'NO DATA'</h1>
             )}
           </div>
-
-          <div>
-            {console.log(`categories`, categories)}
-            {[...new Set(categories)]?.map((c) => (
-              <div style={{ margin: '1rem' }} key={c}>
-                <div className="d-flex justify-content-between align-items-center">
-                  <h5>{c}</h5>
-                  <div className="d-flex justify-content-between">
-                    <h4>
-                      {getPercentage(userData[`${c}`], totalExpense) ===
-                      Infinity
-                        ? 0
-                        : getPercentage(userData[`${c}`], totalExpense)}
-                      %
-                    </h4>
+          <Row>
+            <Col style={{ margin: '5rem 0' }} md={6}>
+              <div>
+                {console.log(`categories`, categories)}
+                {[...new Set(categories)]?.map((c) => (
+                  <div style={{ margin: '1rem' }} key={c}>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <h5>{c}</h5>
+                      <div className="d-flex justify-content-between">
+                        <h4>
+                          {getPercentage(userData[`${c}`], totalExpense) ===
+                          Infinity
+                            ? 0
+                            : getPercentage(userData[`${c}`], totalExpense)}
+                          %
+                        </h4>
+                      </div>
+                    </div>
+                    <ProgressBar now={userData[`${c}`]} max={totalExpense} />
                   </div>
-                </div>
-                <ProgressBar now={userData[`${c}`]} max={totalExpense} />
+                ))}
               </div>
-            ))}
-          </div>
+            </Col>
+
+            <Col style={{ margin: '5rem 0' }} md={6}>
+              <ListGroup>
+                {[...new Set(categories)]?.map((c) => (
+                  <ListGroup.Item className=" d-flex justify-content-between align-items-center">
+                    <h5>{c}</h5>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      {<h4>₹{userData[`${c}`]}</h4>}
+                    </ListGroup.Item>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </Col>
+          </Row>
         </Container>
       )}
     </>

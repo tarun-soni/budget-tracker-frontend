@@ -17,6 +17,7 @@ import {
 } from 'react-floating-action-button'
 import AddTransactionModal from '../components/AddTransactionModal'
 import { CREATE_TRANSACTION } from '../graphql/transactions/mutations'
+import AllPreviousTransactions from '../components/Dashboard/AllPreviousTransactions'
 
 const Homescreen = () => {
   const [addLoading, setAddLoading] = useState(false)
@@ -56,7 +57,8 @@ const Homescreen = () => {
       },
       refetchQueries: [
         {
-          query: GET_MONTH_DATA
+          query: GET_MONTH_DATA,
+          variables: { where: {} }
         },
         { query: GET_CATEGORIES }
       ],
@@ -153,6 +155,8 @@ const Homescreen = () => {
       </Container>
 
       <ExpenseBreakDown totalExpense={totalExpense} where={where} />
+
+      <AllPreviousTransactions />
     </>
   )
 }

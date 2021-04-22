@@ -11,6 +11,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen'
 import Homescreen from './screens/Homescreen'
 import Logout from './components/Logout'
 import DetailedScreen from './screens/DetailedScreen'
+import CategoryWisePage from './screens/CategoryWisePage'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
@@ -33,6 +34,11 @@ const Routes = () => {
         </PrivateRoute>
 
         <PrivateRoute path={HOMESCREEN} exact component={Homescreen} />
+        <PrivateRoute
+          path="/allCategoryDetails"
+          exact
+          component={CategoryWisePage}
+        />
         <PrivateRoute path={DETAILEDSCREEN} exact component={DetailedScreen} />
       </Switch>
     </Router>

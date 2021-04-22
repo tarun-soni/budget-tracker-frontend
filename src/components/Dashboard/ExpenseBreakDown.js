@@ -28,7 +28,7 @@ const ExpenseBreakDown = ({ totalExpense, where }) => {
 
     let _categories = []
     categoryData?.getUserTransactions.map((t) => {
-      _categories.push(t?.category)
+      if (t.category !== '') _categories.push(t.category)
       return _categories
     })
 
@@ -37,12 +37,7 @@ const ExpenseBreakDown = ({ totalExpense, where }) => {
 
   //for each category add them as keys in userData
   useEffect(() => {
-    const filteredCategories = categories.filter((cat) => cat !== '')
-
-    const _data = filteredCategories.reduce(
-      (acc, curr) => ((acc[curr] = 0), acc),
-      {}
-    )
+    const _data = categories.reduce((acc, curr) => ((acc[curr] = 0), acc), {})
 
     data?.getUserTransactions?.map((t) => {
       if (t.category in _data) {

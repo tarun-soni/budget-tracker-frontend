@@ -15,7 +15,7 @@ import DetailedScreen from './screens/DetailedScreen'
 const LOGIN = '/login'
 const LOGOUT = '/logout'
 const HOMESCREEN = '/homescreen'
-const DETAILEDSCREEN = '/detailedData'
+const DETAILEDSCREEN = '/everyMonthDetails'
 const Routes = () => {
   return (
     <Router>

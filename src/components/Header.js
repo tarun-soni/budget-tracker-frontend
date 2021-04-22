@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Nav, Navbar, NavItem } from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
 
@@ -24,14 +24,14 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               {userInfo.isAuthenticated ? (
-                <>
-                  <LinkContainer to="/detailedData" className="cursor-pointer">
-                    <NavItem>VIEW DETAILED DATA</NavItem>
+                <NavDropdown title="VIEW DETAILED DATA">
+                  <LinkContainer to="/everyMonthDetails">
+                    <NavDropdown.Item>EVERY MONTH DETAILS</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/logout">
-                    <NavItem>SIGN OUT</NavItem>
+                  <LinkContainer to="/allCategoryDetails">
+                    <NavDropdown.Item>CATEGORY WISE DETAILS</NavDropdown.Item>
                   </LinkContainer>
-                </>
+                </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>

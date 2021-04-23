@@ -13,7 +13,7 @@ const CustomToast = ({ onClose, variant, msg }) => {
   useEffect(() => {
     setTimeout(() => {
       onClose()
-    }, 3000)
+    }, 7000)
   }, [onClose])
   return (
     <div

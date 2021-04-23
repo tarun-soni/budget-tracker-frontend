@@ -36,7 +36,9 @@ const CategoryWisePage = () => {
   useEffect(() => {
     setAllCategories(
       categoryData?.getUserTransactions
-        .filter((c) => c.category !== '')
+        .filter((c) => {
+          return c.category !== ''
+        })
         .map((c) => {
           return c.category
         })
@@ -60,7 +62,8 @@ const CategoryWisePage = () => {
 
   useEffect(() => {
     console.log(`where`, where)
-  }, [where])
+    console.log(`allCategories`, allCategories)
+  }, [where, allCategories])
   return (
     <>
       {loading ? (
@@ -88,7 +91,7 @@ const CategoryWisePage = () => {
                   <option className="font-l" disabled value="">
                     Select a Category
                   </option>
-                  {allCategories?.map((c) => (
+                  {[...new Set(allCategories)]?.map((c) => (
                     <option className="font-m">{c}</option>
                   ))}
                 </Form.Control>

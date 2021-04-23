@@ -16,7 +16,7 @@ const DetailedScreen = () => {
     yyyy: String(currentYear)
   }
 
-  const { loading, data, error, refetch } = useQuery(GET_MONTH_DATA, {
+  const { loading, data, error } = useQuery(GET_MONTH_DATA, {
     variables: {
       where: where
     }
@@ -33,6 +33,7 @@ const DetailedScreen = () => {
 
     setTotalExpense(_totalExpense)
   }, [data])
+  if (error) console.log(`error`, error)
   return (
     <>
       {loading ? (

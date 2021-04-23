@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import ExpenseBreakDown from '../components/Dashboard/ExpenseBreakDown'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
@@ -19,6 +19,7 @@ import AddTransactionModal from '../components/AddTransactionModal'
 import { CREATE_TRANSACTION } from '../graphql/transactions/mutations'
 import AllPreviousTransactions from '../components/Dashboard/AllPreviousTransactions'
 import CustomToast from '../components/CustomToast'
+import LoadingWrapper from '../components/LoadingWrapper'
 
 const Homescreen = () => {
   const [addLoading, setAddLoading] = useState(false)
@@ -97,7 +98,7 @@ const Homescreen = () => {
 
   if (error) console.log(`error.message`, error.message)
   return (
-    <>
+    <LoadingWrapper error={error} loading={loading || addLoading} data={data}>
       <Header />
       {showAddModal && (
         <AddTransactionModal
@@ -108,7 +109,6 @@ const Homescreen = () => {
           setTransactionData={setTransactionData}
         />
       )}
-
       {loading && <Loader />}
       <Container className="my-5">
         {showAddToast && (
@@ -164,9 +164,8 @@ const Homescreen = () => {
         where={where}
         fromDashboard
       />
-
       <AllPreviousTransactions />
-    </>
+    </LoadingWrapper>
   )
 }
 

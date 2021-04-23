@@ -106,6 +106,10 @@ const AllPreviousTransactions = () => {
       })
     setShowEditModal(false)
   }
+
+  if (error) {
+    console.log(`error`, error)
+  }
   return (
     <>
       {loading ? (

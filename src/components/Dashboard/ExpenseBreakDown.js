@@ -37,6 +37,7 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
 
   //for each category add them as keys in userData
   useEffect(() => {
+    // eslint-disable-next-line
     const _data = categories.reduce((acc, curr) => ((acc[curr] = 0), acc), {})
 
     data?.getUserTransactions?.map((t) => {
@@ -49,7 +50,12 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
 
     setUserData(_data)
   }, [data, categories])
-
+  if (catError) {
+    console.log(`catError`, catError)
+  }
+  if (error) {
+    console.log(`error`, error)
+  }
   return (
     <>
       {catLoading || loading ? (

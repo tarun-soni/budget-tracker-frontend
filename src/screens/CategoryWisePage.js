@@ -27,7 +27,7 @@ const CategoryWisePage = () => {
     type: 'EXPENSE'
   }
 
-  const { loading, data, error, refetch } = useQuery(GET_MONTH_DATA, {
+  const { loading, data, error } = useQuery(GET_MONTH_DATA, {
     variables: {
       where: where
     }
@@ -60,13 +60,20 @@ const CategoryWisePage = () => {
     setNumberOfInstances(_count)
   }, [categoryData, data])
 
-  useEffect(() => {
-    console.log(`where`, where)
-    console.log(`allCategories`, allCategories)
-  }, [where, allCategories])
+  // useEffect(() => {
+  //   console.log(`where`, where)
+  //   console.log(`allCategories`, allCategories)
+  // }, [where, allCategories])
+
+  if (catError) {
+    console.log(`catError`, catError)
+  }
+  if (error) {
+    console.log(`error`, error)
+  }
   return (
     <>
-      {loading ? (
+      {loading || catLoading ? (
         <Loader />
       ) : (
         <Container className="my-5">
@@ -85,7 +92,6 @@ const CategoryWisePage = () => {
                   as="select"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  // placeholder="select a category"
                 >
                   {' '}
                   <option className="font-l" disabled value="">

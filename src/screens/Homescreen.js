@@ -159,6 +159,11 @@ const Homescreen = () => {
           </FloatingButton>
         </FloatingContainer>
       </Container>
+      <ExpenseBreakDown
+        totalExpense={totalExpense}
+        where={where}
+        fromDashboard
+      />
 
       <AllPreviousTransactions />
     </>

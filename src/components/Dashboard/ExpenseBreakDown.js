@@ -10,7 +10,7 @@ import {
 import getPercentage from '../../utils/getPercentage'
 import CustomDoughnut from './CustomDoughnut'
 
-const ExpenseBreakDown = ({ totalExpense, where }) => {
+const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
   const [userData, setUserData] = useState({})
   const [categories, setCategories] = useState([])
 
@@ -65,41 +65,47 @@ const ExpenseBreakDown = ({ totalExpense, where }) => {
             )}
           </div>
           <Row>
-            <Col style={{ margin: '5rem 0' }} md={6}>
-              <div>
-                {console.log(`categories`, categories)}
-                {[...new Set(categories)]?.map((c) => (
-                  <div style={{ margin: '1rem' }} key={c}>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h5>{c}</h5>
-                      <div className="d-flex justify-content-between">
-                        <h4>
-                          {getPercentage(userData[`${c}`], totalExpense) ===
-                          Infinity
-                            ? 0
-                            : getPercentage(userData[`${c}`], totalExpense)}
-                          %
-                        </h4>
+            {!fromDashboard && (
+              <>
+                <Col style={{ margin: '5rem 0' }} md={6}>
+                  <div>
+                    {console.log(`categories`, categories)}
+                    {[...new Set(categories)]?.map((c) => (
+                      <div style={{ margin: '1rem' }} key={c}>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h5>{c}</h5>
+                          <div className="d-flex justify-content-between">
+                            <h4>
+                              {getPercentage(userData[`${c}`], totalExpense) ===
+                              Infinity
+                                ? 0
+                                : getPercentage(userData[`${c}`], totalExpense)}
+                              %
+                            </h4>
+                          </div>
+                        </div>
+                        <ProgressBar
+                          now={userData[`${c}`]}
+                          max={totalExpense}
+                        />
                       </div>
-                    </div>
-                    <ProgressBar now={userData[`${c}`]} max={totalExpense} />
+                    ))}
                   </div>
-                ))}
-              </div>
-            </Col>
-
-            <Col style={{ margin: '5rem 0' }} md={6}>
-              <ListGroup>
-                {[...new Set(categories)]?.map((c) => (
-                  <ListGroup.Item className=" d-flex justify-content-between align-items-center">
-                    <h5>{c}</h5>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      {<h4>₹{userData[`${c}`]}</h4>}
-                    </ListGroup.Item>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            </Col>
+                </Col>
+                <Col style={{ margin: '5rem 0' }} md={6}>
+                  <ListGroup>
+                    {[...new Set(categories)]?.map((c) => (
+                      <ListGroup.Item className=" d-flex justify-content-between align-items-center">
+                        <h5>{c}</h5>
+                        <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                          {<h4>₹{userData[`${c}`]}</h4>}
+                        </ListGroup.Item>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Col>
+              </>
+            )}
           </Row>
         </Container>
       )}

@@ -29,6 +29,17 @@
     font-size: 1.5rem;
   }
 }
+.amount-sm {
+  font-family: 'Courier New', Courier, monospace;
+  color: #000;
+  letter-spacing: px;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 1rem;
+  }
+}
 
 .hero-stats {
   background-color: #fff;

@@ -131,12 +131,20 @@ const CategoryWisePage = () => {
           </Row>
 
           {category !== '' ? (
-            <Row>
-              <Col md={6} className="my-4">
+            <Row className="d-flex  hero-stats" style={{ fontSize: '2rem' }}>
+              <Col
+                md={6}
+                className="my-4 d-flex flex-column align-items-center justify-content-center"
+              >
+                <h6>Total Amount Spent on </h6>
                 <h3>
-                  Total Amount Spent on{' '}
-                  <strong style={{ color: 'blue' }}>{category}</strong>, in the
-                  month of {currentMonth}/{currentYear}
+                  <strong style={{ color: 'blue' }}>{category}</strong>
+                </h3>
+                <h6>in the month of</h6>
+                <h3>
+                  <strong style={{ color: 'blue' }}>
+                    {currentMonth}/{currentYear}
+                  </strong>
                 </h3>
                 <h2 className="amount m-4">
                   {data?.getUserTransactions?.reduce(
@@ -145,13 +153,22 @@ const CategoryWisePage = () => {
                   )}
                 </h2>
               </Col>
-              <Col md={6} className="my-4">
+
+              <Col
+                md={6}
+                className="my-4 d-flex flex-column align-items-center justify-content-center"
+              >
+                <h6> Number of times Spent on</h6>
                 <h3>
-                  Number of times Spent on{' '}
-                  <strong style={{ color: 'blue' }}>{category}</strong>, in the
-                  month of {currentMonth}/{currentYear}
+                  <strong style={{ color: 'blue' }}>{category}</strong>
                 </h3>
-                <h2 className="amount m-4"> {numberOfInstances}</h2>
+                <h6>in the month of</h6>
+                <h3>
+                  <strong style={{ color: 'blue' }}>
+                    {currentMonth}/{currentYear}
+                  </strong>
+                </h3>
+                <h2 className="amount m-4">{numberOfInstances}</h2>
               </Col>
             </Row>
           ) : (

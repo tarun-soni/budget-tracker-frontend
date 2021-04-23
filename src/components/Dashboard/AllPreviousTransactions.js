@@ -7,6 +7,7 @@ import {
 } from '../../graphql/transactions/queries'
 import Loader from '../Loader'
 import { DELETE_TRANSACTION } from '../../graphql/transactions/mutations'
+import { getCurrentMonth, getCurrentYear } from '../../utils/getDates'
 const AllPreviousTransactions = () => {
   const [allTransactions, setAllTransactions] = useState([])
   const { loading, data, error } = useQuery(GET_MONTH_DATA, {
@@ -27,6 +28,15 @@ const AllPreviousTransactions = () => {
         {
           query: GET_MONTH_DATA,
           variables: { where: {} }
+        },
+        {
+          query: GET_MONTH_DATA,
+          variables: {
+            where: {
+              mm: getCurrentMonth(),
+              yyyy: getCurrentYear()
+            }
+          }
         }
       ]
     })

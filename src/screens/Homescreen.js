@@ -45,7 +45,6 @@ const Homescreen = () => {
   const submitTransaction = () => {
     const { type, amount, category } = transactionData
 
-    console.log(`type`, type)
     createTransaction({
       variables: {
         type: String(type),
@@ -71,9 +70,6 @@ const Homescreen = () => {
         if (res?.data?.createTransaction.message === 'created') {
           // todo set true created message
 
-          console.log(`
-          refetch
-          `)
           refetch()
         }
       })
@@ -133,7 +129,9 @@ const Homescreen = () => {
             REMAINING BALANCE
             <p
               className={
-                totalIncome - totalExpense <= 0 ? 'amount red' : 'amount'
+                totalIncome - totalExpense <= 0
+                  ? 'amount text-danger'
+                  : 'amount text-success'
               }
             >
               ₹ {totalIncome - totalExpense}
@@ -153,8 +151,6 @@ const Homescreen = () => {
           </FloatingButton>
         </FloatingContainer>
       </Container>
-
-      <ExpenseBreakDown totalExpense={totalExpense} where={where} />
 
       <AllPreviousTransactions />
     </>

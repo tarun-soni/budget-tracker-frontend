@@ -67,7 +67,6 @@ const Homescreen = () => {
     })
       .then((res) => {
         setAddLoading(false)
-        console.log(`res`, res)
 
         if (res?.data?.createTransaction.message === 'created') {
           setShowAddToast(true)

@@ -62,7 +62,6 @@ const AllPreviousTransactions = () => {
 
   const updateHandler = (id, type, amount, category) => {
     setShowEditModal(true)
-    console.log(`id`, id)
     setTransactionData({
       id,
       type,
@@ -73,10 +72,6 @@ const AllPreviousTransactions = () => {
   const submitTransaction = () => {
     // mutation here
     const { id, type, amount, category } = transactionData
-    console.log(
-      '🚀 ~ file: AllPreviousTransactions.js ~ line 72 ~ submitTransaction ~ transactionData',
-      transactionData
-    )
 
     updateTransactionMutation({
       variables: {
@@ -95,8 +90,6 @@ const AllPreviousTransactions = () => {
       awaitRefetchQueries: true
     })
       .then((res) => {
-        console.log(`res`, res)
-
         if (res?.data?.updateTransaction.message === 'updated') {
           setShowUpdateToast(true)
         }

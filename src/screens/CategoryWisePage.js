@@ -43,7 +43,6 @@ const CategoryWisePage = () => {
           return c.category
         })
     )
-    console.log(`data`, data?.getUserTransactions)
     let _count = 0
     let _totalSpent = 0
 
@@ -59,11 +58,6 @@ const CategoryWisePage = () => {
     setTotalSpent(_totalSpent)
     setNumberOfInstances(_count)
   }, [categoryData, data])
-
-  // useEffect(() => {
-  //   console.log(`where`, where)
-  //   console.log(`allCategories`, allCategories)
-  // }, [where, allCategories])
 
   if (catError) {
     console.log(`catError`, catError)

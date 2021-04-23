@@ -24,8 +24,6 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
     }
   )
   useEffect(() => {
-    console.log(`totalExpense`, totalExpense)
-
     let _categories = []
     categoryData?.getUserTransactions.map((t) => {
       if (t.category !== '') _categories.push(t.category)
@@ -75,7 +73,6 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
               <>
                 <Col style={{ margin: '5rem 0' }} md={6}>
                   <div>
-                    {console.log(`categories`, categories)}
                     {[...new Set(categories)]?.map((c) => (
                       <div style={{ margin: '1rem' }} key={c}>
                         <div className="d-flex justify-content-between align-items-center">

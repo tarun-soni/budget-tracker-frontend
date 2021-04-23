@@ -1,7 +1,6 @@
 export const getCurrentDate = () => {
   let today = new Date()
   let dd = String(today.getDate()).padStart(2, '0')
-  console.log(`dd`, dd)
   return dd
 }
 export const getCurrentMonth = () => {

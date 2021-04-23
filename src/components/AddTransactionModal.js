@@ -15,7 +15,6 @@ const AddTransactionModal = ({
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        {console.log('in modal')}
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             {toEdit ? 'Update' : 'Create'} Transaction

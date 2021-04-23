@@ -6,6 +6,7 @@ import Loader from '../Loader'
 import CustomToast from '../CustomToast'
 import { DELETE_TRANSACTION } from '../../graphql/transactions/mutations'
 import { getCurrentMonth, getCurrentYear } from '../../utils/getDates'
+import AddTransactionModal from '../AddTransactionModal'
 
 const AllPreviousTransactions = () => {
   const [allTransactions, setAllTransactions] = useState([])
@@ -14,6 +15,8 @@ const AllPreviousTransactions = () => {
   })
   const [showDeleteToast, setShowDeleteToast] = useState(false)
   const [deleteMutation] = useMutation(DELETE_TRANSACTION)
+  const [showEditModal, setShowEditModal] = useState(false)
+  let [transactionData, setTransactionData] = useState({})
   useEffect(() => {
     console.log(`All Transactions`, data?.getUserTransactions)
     setAllTransactions(data?.getUserTransactions)
@@ -42,13 +45,25 @@ const AllPreviousTransactions = () => {
     })
       .then((res) => {
         if (res?.data?.deleteTransaction.message === 'DELETED') {
-          console.log('deleted')
           setShowDeleteToast(true)
         }
       })
       .catch((error) => {
         console.log(`error`, error)
       })
+  }
+
+  const updateHandler = (id, type, amount, category) => {
+    setShowEditModal(true)
+    setTransactionData({
+      id,
+      type,
+      amount,
+      category
+    })
+  }
+  const submitTransaction = () => {
+    // mutation here
   }
   return (
     <>
@@ -63,6 +78,18 @@ const AllPreviousTransactions = () => {
               onClose={() => setShowDeleteToast(false)}
             />
           )}
+
+          {showEditModal && (
+            <AddTransactionModal
+              show={showEditModal}
+              submitTransaction={submitTransaction}
+              onHide={() => setShowEditModal(false)}
+              transactionData={transactionData}
+              setTransactionData={setTransactionData}
+              toEdit
+            />
+          )}
+
           <h2>All Transactions</h2>
 
           <Table striped bordered hover responsive className="table-sm">
@@ -93,7 +120,21 @@ const AllPreviousTransactions = () => {
                   <td>
                     {transaction?.dd} - {transaction?.mm} - {transaction?.yyyy}
                   </td>
-                  <td>
+                  <td className="d-flex align-items-center justify-content-around">
+                    <Button
+                      variant="info"
+                      size="sm"
+                      onClick={() =>
+                        updateHandler(
+                          transaction._id,
+                          transaction?.type,
+                          transaction?.amount,
+                          transaction?.category
+                        )
+                      }
+                    >
+                      Update
+                    </Button>
                     <Button
                       variant="danger"
                       size="sm"

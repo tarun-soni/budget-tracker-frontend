@@ -29,7 +29,7 @@ const Homescreen = () => {
   const [transactionData, setTransactionData] = useState({
     type: 'EXPENSE',
     amount: 1500,
-    category: 'TRAVEL'
+    category: 'default'
   })
 
   const where = {

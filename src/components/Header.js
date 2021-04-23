@@ -10,8 +10,8 @@ const Header = () => {
   return (
     <>
       <Navbar
-        className="font-weight-bold"
-        bg="light"
+        className="font-weight-bold navbar-dark bg-primary"
+        // bg="dark"
         expand="lg"
         collapseOnSelect
       >
@@ -24,20 +24,23 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               {userInfo.isAuthenticated ? (
-                <NavDropdown title="VIEW DETAILED DATA">
-                  <LinkContainer to="/everyMonthDetails">
-                    <NavDropdown.Item>EVERY MONTH DETAILS</NavDropdown.Item>
+                <>
+                  <NavDropdown title="VIEW DETAILED DATA">
+                    <LinkContainer to="/everyMonthDetails">
+                      <NavDropdown.Item>EVERY MONTH DETAILS</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/allCategoryDetails">
+                      <NavDropdown.Item>CATEGORY WISE DETAILS</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+
+                  <LinkContainer to="/logout">
+                    <Nav.Link>SIGN OUT</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/allCategoryDetails">
-                    <NavDropdown.Item>CATEGORY WISE DETAILS</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
+                </>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link>
-                    <i className="fas fa-user px-1"></i>
-                    SIGN IN
-                  </Nav.Link>
+                  <Nav.Link>SIGN IN</Nav.Link>
                 </LinkContainer>
               )}
             </Nav>

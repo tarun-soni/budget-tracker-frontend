@@ -18,13 +18,14 @@ import {
 import AddTransactionModal from '../components/AddTransactionModal'
 import { CREATE_TRANSACTION } from '../graphql/transactions/mutations'
 import AllPreviousTransactions from '../components/Dashboard/AllPreviousTransactions'
+import CustomToast from '../components/CustomToast'
 
 const Homescreen = () => {
   const [addLoading, setAddLoading] = useState(false)
   const [totalIncome, setTotalIncome] = useState(0)
   const [totalExpense, setTotalExpense] = useState(0)
   const [showAddModal, setShowAddModal] = useState(false)
-
+  const [showAddToast, setShowAddToast] = useState(false)
   const [transactionData, setTransactionData] = useState({
     type: 'EXPENSE',
     amount: 1500,
@@ -68,8 +69,7 @@ const Homescreen = () => {
         console.log(`res`, res)
 
         if (res?.data?.createTransaction.message === 'created') {
-          // todo set true created message
-
+          setShowAddToast(true)
           refetch()
         }
       })
@@ -108,8 +108,16 @@ const Homescreen = () => {
           setTransactionData={setTransactionData}
         />
       )}
+
       {loading && <Loader />}
       <Container className="my-5">
+        {showAddToast && (
+          <CustomToast
+            msg="ADDED SUCESSFULLY"
+            variant="success"
+            onClose={() => setShowAddToast(false)}
+          />
+        )}
         <Row className="d-flex align-items-center justify-content-between">
           <h1 className="lspace-large">DashBoard</h1>
 

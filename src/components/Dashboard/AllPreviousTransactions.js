@@ -1,18 +1,18 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Button, Container, Table } from 'react-bootstrap'
-import {
-  GET_CATEGORIES,
-  GET_MONTH_DATA
-} from '../../graphql/transactions/queries'
+import { GET_MONTH_DATA } from '../../graphql/transactions/queries'
 import Loader from '../Loader'
+import CustomToast from '../CustomToast'
 import { DELETE_TRANSACTION } from '../../graphql/transactions/mutations'
 import { getCurrentMonth, getCurrentYear } from '../../utils/getDates'
+
 const AllPreviousTransactions = () => {
   const [allTransactions, setAllTransactions] = useState([])
   const { loading, data, error } = useQuery(GET_MONTH_DATA, {
     variables: { where: {} }
   })
+  const [showDeleteToast, setShowDeleteToast] = useState(false)
   const [deleteMutation] = useMutation(DELETE_TRANSACTION)
   useEffect(() => {
     console.log(`All Transactions`, data?.getUserTransactions)
@@ -41,9 +41,10 @@ const AllPreviousTransactions = () => {
       ]
     })
       .then((res) => {
-        if (res?.data?.deleteTransaction.message === 'DELETED')
+        if (res?.data?.deleteTransaction.message === 'DELETED') {
           console.log('deleted')
-        // todo add delete toast
+          setShowDeleteToast(true)
+        }
       })
       .catch((error) => {
         console.log(`error`, error)
@@ -55,6 +56,13 @@ const AllPreviousTransactions = () => {
         <Loader />
       ) : (
         <Container className="mb-5">
+          {showDeleteToast && (
+            <CustomToast
+              msg="DELTED SUCESSFULLY"
+              variant="info"
+              onClose={() => setShowDeleteToast(false)}
+            />
+          )}
           <h2>All Transactions</h2>
 
           <Table striped bordered hover responsive className="table-sm">

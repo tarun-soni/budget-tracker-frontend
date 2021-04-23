@@ -73,7 +73,12 @@ const Login = () => {
             className="login-form align-self-baseline"
             onSubmit={handleLogin}
           >
-            <Form.Label className='align-baseline"'>Email</Form.Label>
+            <Form.Label
+              className="align-self-baseline font-weight-bold"
+              htmlFor="email"
+            >
+              Email
+            </Form.Label>
             <Form.Control
               className="w-100 m-2 mb-4"
               type="email"
@@ -83,7 +88,10 @@ const Login = () => {
               value={email}
               onChange={(e) => onChange(e)}
             ></Form.Control>
-            <Form.Label className="align-self-baseline" htmlFor="email">
+            <Form.Label
+              className="align-self-baseline font-weight-bold"
+              htmlFor="password"
+            >
               Password
             </Form.Label>
             <Form.Control
@@ -95,20 +103,22 @@ const Login = () => {
               value={password}
               onChange={(e) => onChange(e)}
             ></Form.Control>
-            <Button type="submit" variant="success" className="w-100 mt-4">
+            <Button
+              type="submit"
+              variant="success"
+              className="w-100 mt-4 lspace-small"
+            >
               Login
             </Button>
           </Form>
           <div className="features">
             <div className="feature">
-              <i className="fas fa-headphones"></i>
-              <h4>Buy Premium Headphones</h4>
-              <p>Have an awesome Experience</p>
+              <h4>Maintain your monthy budget</h4>
+              <p>View Stats</p>
             </div>
             <div className="feature">
-              <i className="fa fa-check-circle" aria-hidden="true"></i>
               <h4>Sign up and Login</h4>
-              <p>Login to see and edit all notes.</p>
+              <p>Login to view and maintain budget.</p>
             </div>
           </div>
         </Container>

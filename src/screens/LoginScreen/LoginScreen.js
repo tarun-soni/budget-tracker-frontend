@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import Loader from '../../components/Loader'
 import { LOGIN_USER } from '../../graphql/user/mutations'
@@ -11,8 +11,8 @@ import './loginCss.scss'
 const Login = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: 'u1@example.com',
+    password: '1212'
   })
   const [loading, setLoading] = useState(false)
   const [LoginMutation] = useMutation(LOGIN_USER)
@@ -110,6 +110,12 @@ const Login = () => {
             >
               Login
             </Button>
+            <h6 className="my-2">
+              Don't have an account?{' '}
+              <Link to={'/register'} style={{ color: 'blue' }}>
+                Sign up{' '}
+              </Link>
+            </h6>
           </Form>
           <div className="features">
             <div className="feature">

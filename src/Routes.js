@@ -8,12 +8,15 @@ import {
 import PrivateRoute from './components/PrivateRoute'
 import LoggedOutRoute from './components/LoggedOutRoute'
 import LoginScreen from './screens/LoginScreen/LoginScreen'
+import RegisterScreen from './screens/LoginScreen/RegisterScreen'
 import Homescreen from './screens/Homescreen'
 import Logout from './components/Logout'
 import DetailedScreen from './screens/DetailedScreen'
 import CategoryWisePage from './screens/CategoryWisePage'
 
 const LOGIN = '/login'
+const REGISTER = '/register'
+
 const LOGOUT = '/logout'
 const HOMESCREEN = '/homescreen'
 const DETAILEDSCREEN = '/everyMonthDetails'
@@ -28,6 +31,7 @@ const Routes = () => {
           exact
           component={LoginScreen}
         ></LoggedOutRoute>
+        <Route path={REGISTER} exact component={RegisterScreen}></Route>
 
         <PrivateRoute path="/" exact>
           <Redirect to={LOGIN} />

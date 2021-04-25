@@ -73,8 +73,8 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
               <>
                 <Col style={{ margin: '5rem 0' }} md={6}>
                   <div>
-                    {[...new Set(categories)]?.map((c) => (
-                      <div style={{ margin: '1rem' }} key={c}>
+                    {[...new Set(categories)]?.map((c, index) => (
+                      <div style={{ margin: '1rem' }} key={index}>
                         <div className="d-flex justify-content-between align-items-center">
                           <h5>{c}</h5>
                           <div className="d-flex justify-content-between">
@@ -97,8 +97,11 @@ const ExpenseBreakDown = ({ fromDashboard, totalExpense, where }) => {
                 </Col>
                 <Col style={{ margin: '5rem 0' }} md={6}>
                   <ListGroup>
-                    {[...new Set(categories)]?.map((c) => (
-                      <ListGroup.Item className=" d-flex justify-content-between align-items-center">
+                    {[...new Set(categories)]?.map((c, index) => (
+                      <ListGroup.Item
+                        className=" d-flex justify-content-between align-items-center"
+                        key={index}
+                      >
                         <h5>{c}</h5>
                         <ListGroup.Item className="d-flex justify-content-between align-items-center">
                           {<h4>₹{userData[`${c}`]}</h4>}

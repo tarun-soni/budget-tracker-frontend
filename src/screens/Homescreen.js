@@ -117,7 +117,7 @@ const Homescreen = () => {
             onClose={() => setShowAddToast(false)}
           />
         )}
-        <Row className="d-flex align-items-center justify-content-between">
+        <Row className="d-flex align-items-center justify-content-between mx-1">
           <h1 className="lspace-large">DashBoard</h1>
 
           <div className="d-flex">

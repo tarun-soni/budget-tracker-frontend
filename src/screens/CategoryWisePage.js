@@ -71,11 +71,11 @@ const CategoryWisePage = () => {
         <Loader />
       ) : (
         <Container className="my-5">
-          <Row className="d-flex justify-content-between">
+          <Row className="d-flex justify-content-between mx-1">
             <h1 className="lspace-large">View By Each Category</h1>
           </Row>
 
-          <Row className="d-flex  justify-content-between mt-4 mb-2">
+          <Row className="d-flex  justify-content-between mt-4 mb-2 mx-2">
             <h2 className="lspace-large">Choose Category</h2>
           </Row>
           <Row>
@@ -91,8 +91,10 @@ const CategoryWisePage = () => {
                   <option className="font-l" disabled value="">
                     Select a Category
                   </option>
-                  {[...new Set(allCategories)]?.map((c) => (
-                    <option className="font-m">{c}</option>
+                  {[...new Set(allCategories)]?.map((c, index) => (
+                    <option key={index} className="font-m">
+                      {c}
+                    </option>
                   ))}
                 </Form.Control>
               </Col>
@@ -174,7 +176,7 @@ const CategoryWisePage = () => {
                   <h2 className="amount m-4">{numberOfInstances}</h2>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mx-2">
                 <h3>Breakdown of {totalSpent}</h3>
                 <Table
                   striped

@@ -23,8 +23,6 @@ const DetailedScreen = () => {
   })
 
   useEffect(() => {
-    console.log(`data detailed`, data?.getUserTransactions)
-
     let _totalExpense = 0
     data?.getUserTransactions?.map((t) => {
       if (t.type === 'EXPENSE') _totalExpense += Number(t.amount)
@@ -40,7 +38,7 @@ const DetailedScreen = () => {
         <Loader />
       ) : (
         <Container className="my-5">
-          <Row className="d-flex justify-content-between">
+          <Row className="d-flex justify-content-between  mx-1">
             <h1 className="lspace-large">Detailed View</h1>
 
             <div className="d-flex">

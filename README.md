@@ -6,6 +6,8 @@
 
 [budget-tracker.netlify.app](https://tarun-budget-tracker.netlify.app/)
 
+[BACKEND REPO LINK](https://github.com/tarun-soni/budget-tracker-backend)
+
 - LIBRARIES AND TECHNOLOGIES USED
   - ReactJS
   - Apollo graphql

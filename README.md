@@ -16,6 +16,6 @@
 
 ---
 
-## Working
+## Working (gif takes a few seconds to load)
 
 ![working](./readme_assets/readmeGIF.gif)

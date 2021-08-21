@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:v16.6.1
+      - image: node:v16
 
     working_directory: ~/repo
 

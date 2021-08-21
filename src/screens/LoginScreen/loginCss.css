@@ -26,22 +26,16 @@
   position: relative;
   padding-left: 30px;
   margin: 40px 0;
-  i {
-    color: #2762eb;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    h3 {
-      margin: 0;
-    }
-  }
-  p {
-    font-size: 14px;
-    line-height: 1.8;
-    margin: 5px 0;
-  }
 }
 
+.feature p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 5px 0;
+}
+.feature h4 {
+  margin: 0;
+}
 @media (max-width: 768px) {
   .form-container {
     flex-direction: column;

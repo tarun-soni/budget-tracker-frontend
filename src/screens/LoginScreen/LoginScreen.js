@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil'
 import Loader from '../../components/Loader'
 import { LOGIN_USER } from '../../graphql/user/mutations'
 import { userInfoState } from '../../store/login'
-import './loginCss.scss'
+import './loginCss.css'
 
 const Login = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)

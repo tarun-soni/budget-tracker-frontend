@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import App from './App'
 import './bootstrap.min.css'
-import './base.scss'
+import './base.css'
 import { RecoilRoot } from 'recoil'
 
 render(
